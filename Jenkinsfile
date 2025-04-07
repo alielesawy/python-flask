@@ -27,14 +27,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build Docker image
-                sh 'docker build -t flask-jenkins-test:latest .'
+                sh 'sudo docker build -t flask-jenkins-test:latest .'
             }
         }
         
         stage('Run Container') {
             steps {
                 // Run the container (for testing)
-                sh 'docker run -d -p 5000:5000 --name flask_test flask-jenkins-test:latest'
+                sh 'sudo docker run -d -p 5000:5000 --name flask_test flask-jenkins-test:latest'
             }
         }
     }
@@ -42,8 +42,8 @@ pipeline {
     post {
         always {
             // Clean up: stop and remove the container
-            sh 'docker stop flask_test || true'
-            sh 'docker rm flask_test || true'
+            sh 'sudo docker stop flask_test || true'
+            sh 'sudo docker rm flask_test || true'
         }
         success {
             echo 'Build and tests completed successfully!'
