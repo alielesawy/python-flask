@@ -1,6 +1,11 @@
 pipeline {
     agent any
     
+    environment {
+        // Add Jenkins user's local bin directory to PATH
+        PATH = "/var/lib/jenkins/.local/bin:${env.PATH}"
+    }
+    
     stages {
         stage('Checkout') {
             steps {
