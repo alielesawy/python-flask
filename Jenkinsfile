@@ -2,7 +2,6 @@ pipeline {
     agent any
     
     environment {
-        // Add Jenkins user's local bin directory to PATH
         PATH = "/var/lib/jenkins/.local/bin:${env.PATH}"
     }
     
@@ -28,7 +27,7 @@ pipeline {
         
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 5000:5000 --name flask_test flask-jenkins-test:latest'
+                sh 'docker run -d -p 5050:5000 --name flask_test flask-jenkins-test:latest'
             }
         }
     }
