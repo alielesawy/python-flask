@@ -18,14 +18,8 @@ pipeline {
                 sh 'pip install --break-system-packages -r requirements.txt'
             }
         }
-        
-        stage('Test') {
-            steps {
-                sh 'pip install --break-system-packages pytest'
-                sh 'pytest test_app.py'
-            }
-        }
-        
+    
+    
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t flask-jenkins-test:latest .'

@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "Hello, Jenkins! This is a test application."
+    return "Hello, Jenkins! This is a From GORIZM."
 
 @app.route('/health')
 def health():
