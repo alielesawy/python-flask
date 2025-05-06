@@ -1,0 +1,42 @@
+name: Flask CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --break-system-packages -r requirements.txt
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        run: docker build -t flask-jenkins-test:latest .
+
+      - name: Run Docker Container
+        run: docker run -d -p 5050:5000 --name flask_test flask-jenkins-test:latest
+
+      - name: Cleanup Docker Container
+        if: always()
+        run: |
+          docker stop flask_test || true
+          docker rm flask_test || true
